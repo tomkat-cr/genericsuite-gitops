@@ -8,14 +8,19 @@
 OTHER_USER="$1"
 OS_USER="$2"
 
+SUDO_CMD=""
+if [ $(whoami) != "root" ] ; then
+    SUDO_CMD="sudo"
+fi
+
 # Step 1: Updating the System
-apt update -y
-apt upgrade -y
-apt install -y curl apt-transport-https wget
+$SUDO_CMD apt update -y
+$SUDO_CMD apt upgrade -y
+$SUDO_CMD apt install -y curl apt-transport-https wget
 
 # Step 2: Install VirtualBox Hypervisor
 
-apt install virtualbox virtualbox-ext-pack
+$SUDO_CMD apt install virtualbox virtualbox-ext-pack
 
 # The output should tell you the service is active (running).
 
@@ -30,15 +35,15 @@ apt install virtualbox virtualbox-ext-pack
 
 # 1. Download the Minikube binary package using the wget command:
 
-wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+$SUDO_CMD wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 
 # 2. Move the file to the /usr/local/bin directory:
 
-mv minikube-linux-amd64 /usr/local/bin/minikube
+$SUDO_CMD mv minikube-linux-amd64 /usr/local/bin/minikube
 
 # 3. Then, use the chmod command to give the file executive permission:
 
-chmod 755 /usr/local/bin/minikube
+$SUDO_CMD chmod 755 /usr/local/bin/minikube
 
 # 4. With that, you have finished setting up Minikube. Verify the installation by checking the version of the software:
 
@@ -51,15 +56,15 @@ chmod 755 /usr/local/bin/minikube
 
 # 1. Run the following command to download kubectl:
 
-curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+$SUDO_CMD curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
 
 # 2. Give it executive permission:
 
-chmod +x kubectl
+$SUDO_CMD chmod +x kubectl
 
 # 3. Move it to the same directory where you previously stored Minikube:
 
-mv ./kubectl /usr/local/bin/kubectl
+$SUDO_CMD mv ./kubectl /usr/local/bin/kubectl
 
 # 4. Verify the installation by running:
 

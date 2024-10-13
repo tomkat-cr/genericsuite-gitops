@@ -20,7 +20,6 @@ if [ "$OS_TYPE" = "debian" ]; then
 elif [ "$OS_TYPE" = "rhel" ]; then
     sudo firewall-cmd --zone=public --add-port=${APP_FRONTEND_PORT}/tcp --permanent
     sudo firewall-cmd --zone=public --add-port=${APP_BACKEND_PORT}/tcp --permanent
-    # Reload firewall
     sudo firewall-cmd --reload
 else
     echo "Linux distro [$OS_TYPE] is not supported"

@@ -10,39 +10,44 @@ OS_USER="$2"
 CURRENT_DATE=`date +%Y-%m-%d`
 libvirtd_bak_filename="libvirtd.conf.$CURRENT_DATE.bak"
 
+SUDO_CMD=""
+if [ $(whoami) != "root" ] ; then
+    SUDO_CMD="sudo"
+fi
+
 # Step 1: Updating the System
-yum -y update
+$SUDO_CMD yum -y update
 
 # Step 2: Installing KVM Hypervisor
 # 1. Start by installing the required packages:
 
-yum -y install epel-release
-yum -y install libvirt qemu-kvm virt-install virt-top libguestfs-tools bridge-utils
+$SUDO_CMD yum -y install epel-release
+$SUDO_CMD yum -y install libvirt qemu-kvm virt-install virt-top libguestfs-tools bridge-utils
 
 # 2. Then, start and enable the libvirtd service:
 
-systemctl start libvirtd
-systemctl enable libvirtd
+$SUDO_CMD systemctl start libvirtd
+$SUDO_CMD systemctl enable libvirtd
 
 # 3. Confirm the virtualization service is running with the command:
 
 # Check KVM status.
-systemctl status libvirtd
+$SUDO_CMD systemctl status libvirtd
 
 # The output should tell you the service is active (running).
 
 # 4. Next, add your user to the libvirt group:
 
-usermod -a -G libvirt $(whoami)
+$SUDO_CMD usermod -a -G libvirt $(whoami)
 
 if [ "$OTHER_USER" != "" ] ; then
     if [ $(whoami) != $OTHER_USER ] ; then
-        usermod -a -G libvirt $(OTHER_USER)
+        $SUDO_CMD usermod -a -G libvirt $(OTHER_USER)
     fi
 fi
 if [ "$OS_USER" != "" ] ; then
     if [ $(whoami) != $OS_USER ] ; then
-        usermod -a -G libvirt $(OS_USER)
+        $SUDO_CMD usermod -a -G libvirt $(OS_USER)
     fi
 fi
 
@@ -56,32 +61,32 @@ fi
 # unix_sock_rw_perms = "0770"
 
 if [ ! -f "/etc/libvirt/$libvirtd_bak_filename" ]; then
-    cp /etc/libvirt/libvirtd.conf /etc/libvirt/${libvirtd_bak_filename}
-    echo 'unix_sock_group = "libvirt"' >> /etc/libvirt/libvirtd.conf
-    echo 'unix_sock_rw_perms = "0770"' >> /etc/libvirt/libvirtd.conf
+    $SUDO_CMD cp /etc/libvirt/libvirtd.conf /etc/libvirt/${libvirtd_bak_filename}
+    $SUDO_CMD echo 'unix_sock_group = "libvirt"' >> /etc/libvirt/libvirtd.conf
+    $SUDO_CMD echo 'unix_sock_rw_perms = "0770"' >> /etc/libvirt/libvirtd.conf
 fi
 
 # 7. Finally, restart the service for the changes to take place:
 
-systemctl restart libvirtd.service
+$SUDO_CMD systemctl restart libvirtd.service
 
 # Step 3: Installing Minikube
 
-yum -y install wget
+$SUDO_CMD yum -y install wget
 
 # With the virtualization service enabled, you can move on to installing Minikube.
 
 # 1. Download the Minikube binary package using the wget command:
 
-wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+$SUDO_CMD wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 
 # 2. Then, use the chmod command to give the file executive permission:
 
-chmod +x minikube-linux-amd64
+$SUDO_CMD chmod +x minikube-linux-amd64
 
 # 3. Finally, move the file to the /usr/local/bin directory:
 
-mv minikube-linux-amd64 /usr/local/bin/minikube
+$SUDO_CMD mv minikube-linux-amd64 /usr/local/bin/minikube
 
 # 4. With that, you have finished setting up Minikube. Verify the installation by checking the version of the software:
 
@@ -94,15 +99,15 @@ mv minikube-linux-amd64 /usr/local/bin/minikube
 
 # 1. Run the following command to download kubectl:
 
-curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+$SUDO_CMD curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
 
 # 2. Give it executive permission:
 
-chmod +x kubectl
+$SUDO_CMD chmod +x kubectl
 
 # 3. Move it to the same directory where you previously stored Minikube:
 
-mv kubectl  /usr/local/bin/
+$SUDO_CMD mv kubectl /usr/local/bin/
 
 # 4. Verify the installation by running:
 
