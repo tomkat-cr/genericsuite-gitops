@@ -175,6 +175,10 @@ if [ -f /etc/os-release ]; then
     . /etc/os-release
     OS=$ID
     VER=$VERSION_ID
+    if [ "$VER" = "" ]; then
+        VER=$(echo $VERSION | awk '{print $1}')
+    fi
+    VERSION_INT=$(echo $VERSION | awk '{print int($1)}')
 else
     echo "This script only works on Linux distros"
     exit 1
@@ -182,11 +186,12 @@ fi
 
 if [ "${OS}" = "ubuntu" ]; then
     ok=0
-    if [ "${VER}" = "20.04" ]; then
-        echo "Installing docker on Ubuntu ${VER}"
-    elif [ "${VER}" = "22.04" ]; then
-        echo "Installing docker on Ubuntu ${VER}"
-    elif [ "${VER}" = "24.04" ]; then
+    # if [ "${VER}" = "20.04" ]; then
+    #     echo "Installing docker on Ubuntu ${VER}"
+    # elif [ "${VER}" = "22.04" ]; then
+    #     echo "Installing docker on Ubuntu ${VER}"
+    # elif [ "${VER}" = "24.04" ]; then
+    if [ ${VERSION_INT} -gt 19 ]; then
         echo "Installing docker on Ubuntu ${VER}"
     else
         echo "Ubuntu version ${VER} is not supported"
@@ -195,9 +200,10 @@ if [ "${OS}" = "ubuntu" ]; then
     installation_ubuntu
 
 elif [ "${OS}" = "debian" ]; then
-    if [ "${VER}" = "11" ]; then
-        echo "Installing docker on Debian ${VER}"
-    elif [ "${VER}" = "12" ]; then
+    # if [ "${VER}" = "11" ]; then
+    #     echo "Installing docker on Debian ${VER}"
+    # elif [ "${VER}" = "12" ]; then
+    if [ ${VERSION_INT} -gt 10 ]; then
         echo "Installing docker on Debian ${VER}"
     else
         echo "Debian version ${VER} is not supported"
@@ -206,9 +212,10 @@ elif [ "${OS}" = "debian" ]; then
     installation_debian
 
 elif [ "${OS}" = "centos" ]; then
-    if [ "$(echo $VER | grep 7)" != "" ]; then
-        echo "Installing docker on CentOS ${VER}"
-    elif [ "$(echo $VER | grep 8)" != "" ]; then
+    # if [ "$(echo $VER | grep 7)" != "" ]; then
+    #     echo "Installing docker on CentOS ${VER}"
+    # elif [ "$(echo $VER | grep 8)" != "" ]; then
+    if [ ${VERSION_INT} -gt 6 ]; then
         echo "Installing docker on CentOS ${VER}"
     else
         echo "CentOS version ${VER} is not supported"
@@ -217,11 +224,12 @@ elif [ "${OS}" = "centos" ]; then
     installation_centos
 
 elif [ "${OS}" = "rhel" ]; then
-    if [ "$(echo $VER | grep 7)" != "" ]; then
-        echo "Installing docker on RHEL ${VER}"
-    elif [ "$(echo $VER | grep 8)" != "" ]; then
-        echo "Installing docker on RHEL ${VER}"
-    elif [ "$(echo $VER | grep 9)" != "" ]; then
+    # if [ "$(echo $VER | grep 7)" != "" ]; then
+    #     echo "Installing docker on RHEL ${VER}"
+    # elif [ "$(echo $VER | grep 8)" != "" ]; then
+    #     echo "Installing docker on RHEL ${VER}"
+    # elif [ "$(echo $VER | grep 9)" != "" ]; then
+    if [ ${VERSION_INT} -gt 6 ]; then
         echo "Installing docker on RHEL ${VER}"
     else
         echo "RHEL version ${VER} is not supported"
@@ -234,9 +242,11 @@ elif [ "${OS}" = "amzn" ]; then
     installation_rhel
 
 elif [ "${OS}" = "fedora" ]; then
-    if [ "$(echo $VER | grep 32)" != "" ]; then
-        echo "Installing docker on Fedora ${VER}"
-    elif [ "$(echo $VER | grep 33)" != "" ]; then
+    # take the first element of $ver with awk
+    # if [ "$(echo $VER | grep 32)" != "" ]; then
+    #     echo "Installing docker on Fedora ${VER}"
+    # elif [ "$(echo $VER | grep 33)" != "" ]; then
+    if [ ${VERSION_INT} -gt 31 ]; then
         echo "Installing docker on Fedora ${VER}"
     else
         echo "Fedora version ${VER} is not supported"
@@ -245,9 +255,10 @@ elif [ "${OS}" = "fedora" ]; then
     installation_fedora
 
 elif [ "${OS}" = "raspbian" ]; then
-    if [ "${VER}" = "11" ]; then
-        echo "Installing docker on Raspberri Pi ${VER}"
-    elif [ "${VER}" = "12" ]; then
+    # if [ "${VER}" = "11" ]; then
+    #     echo "Installing docker on Raspberri Pi ${VER}"
+    # elif [ "${VER}" = "12" ]; then
+    if [ ${VERSION_INT} -gt 10 ]; then
         echo "Installing docker on Raspberri Pi ${VER}"
     else
         echo "Raspberri Pi version ${VER} is not supported"
