@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### New
 Abstract and add to the Genericsuite project [GS-141].
 Implement ollama server [GS-139].
+Implement n8n server [GS-165]
 
 
 ## 0.1.2 (2022-03-16)
