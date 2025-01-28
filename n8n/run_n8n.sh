@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # File: n8n/run_n8n.sh
 # Run n8n automation tool
 # 2025-01-15 | CR
@@ -10,8 +10,15 @@ REPO_BASEDIR="`pwd`"
 cd "`dirname "$0"`"
 SCRIPTS_DIR="`pwd`"
 
+echo $(pwd)
+
 if [ -f ".env" ]; then
-    set -o allexport; . .env ; set +o allexport ;
+    set -o allexport
+    if ! source .env
+    then
+	. .env 
+    fi
+    set +o allexport
 else
     echo "Error: .env file not found."
     echo ""
@@ -47,35 +54,35 @@ if [ "$ACTION" = "open" ]; then
     echo ""
     echo "Opening public access to port ${N8N_PORT} in the firewall"
     echo ""
-    sh ../scripts/firewall_manager.sh open ${N8N_PORT}
+    source ../scripts/firewall_manager.sh open ${N8N_PORT}
 fi
 
 if [ "$ACTION" = "close" ]; then
     echo ""
     echo "Closing public access to port ${N8N_PORT} in the firewall"
     echo ""
-    sh ../scripts/firewall_manager.sh close ${N8N_PORT}
+    source ../scripts/firewall_manager.sh close ${N8N_PORT}
 fi
 
 if [ "$ACTION" = "stop" ]; then
     echo ""
     echo "Stopping n8n"
     echo ""
-    docker-compose stop
+    docker compose stop
 fi
 
 if [ "$ACTION" = "down" ]; then
     echo ""
     echo "Stopping n8n"
     echo ""
-    docker-compose down
+    docker compose down
 fi
 
 if [ "$ACTION" = "run" ]; then
     echo ""
     echo "Starting n8n"
     echo ""
-    docker-compose up -d
+    docker compose up -d
     docker ps
     echo ""
     echo "Access n8n local server at http://127.0.0.1:${N8N_PORT}"
@@ -87,13 +94,13 @@ if [ "$ACTION" = "run" ]; then
     echo ""
     echo "Press ENTER to continue with the logs or Ctrl-C to cancel."
     read answer ;
-    docker-compose logs -f
+    docker compose logs -f
 fi
 
 if [ "$ACTION" = "logs" ]; then
     echo ""
     echo "Displaying logs for all services"
-    docker-compose logs -f
+    docker compose logs -f
 fi
 
 if [ "$ACTION" = "update" ]; then
@@ -102,16 +109,16 @@ if [ "$ACTION" = "update" ]; then
     echo ""
     echo ""
     # docker pull docker.n8n.io/n8nio/n8n:nightly
-    docker-compose down
-    docker-compose pull
-    docker-compose up -d
+    docker compose down
+    docker compose pull
+    docker compose up -d
 fi
 
 if [ "$ACTION" = "force-recreate" ]; then
     echo ""
     echo "Forcing recreate of all services"
     if docker ps | grep n8n ; then
-        docker-compose down
+        docker compose down
     fi
     docker compose up --force-recreate -d
 fi

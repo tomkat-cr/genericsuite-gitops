@@ -12,12 +12,12 @@
 if [ -f /etc/os-release ]; then
     # https://www.freedesktop.org/software/systemd/man/latest/os-release.html
     . /etc/os-release
-    OS=$ID
-    VER=$VERSION_ID
-    ID_LIKE=$ID_LIKE
+    export OS=$ID
+    export VER=$VERSION_ID
+    export ID_LIKE=$ID_LIKE
     if [ "$ID_LIKE" = "" ]; then
         # It's one of main distros (debian, rhel, fedora, etc.)
-        ID_LIKE=$ID
+        export ID_LIKE=$ID
     fi
 else
     echo "This script only works on Linux distros with /etc/os-release"

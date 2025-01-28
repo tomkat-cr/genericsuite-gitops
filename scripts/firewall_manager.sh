@@ -3,6 +3,10 @@
 # Run Open/close public access to firewall ports
 # 2024-10-14 | CR
 
+REPO_BASEDIR="`pwd`"
+cd "`dirname "$0"`"
+SCRIPTS_DIR="`pwd`"
+
 SUDO_CMD=""
 if [ $(whoami) != "root" ] ; then
 	SUDO_CMD="sudo"
@@ -12,6 +16,10 @@ firewall_manager() {
     local action="$1"
     local port="$2"
     local ufw_action=""
+
+    if [ "$OS_TYPE" = "" ]; then
+	source ../scripts/get_os_name_type.sh
+    fi
 
     if [ "$OS_TYPE" = "debian" ]; then
         if [ "${action}" = "open" ]; then

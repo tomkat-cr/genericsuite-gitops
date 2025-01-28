@@ -12,38 +12,38 @@ help:
 
 # Runs n8n in detached mode
 run:
-	sh run_n8n.sh
+	bash run_n8n.sh
 
 # Stops n8n
 stop:
-	sh run_n8n.sh stop
+	bash run_n8n.sh stop
 
 # Stpos and removes n8n containers
 down:
-	sh run_n8n.sh down
+	bash run_n8n.sh down
 
 # Shows n8n and postgres logs
 logs:
-	sh run_n8n.sh logs
+	bash run_n8n.sh logs
 
 # Upgrade n8n, postgress and pg_admin
 update:
-	sh run_n8n.sh update
+	bash run_n8n.sh update
 
 # Restart docker containers
 restart: down run
 
 # Open n8n port (linux)
 open:
-	sh run_n8n.sh open
+	bash run_n8n.sh open
 
 # Close n8n port (linux)
 close:
-	sh run_n8n.sh close
+	bash run_n8n.sh close
 
 # Run n8n with force-recreate
 force-recreate:
-	sh run_n8n.sh force-recreate
+	bash run_n8n.sh force-recreate
 
 # Enter to the n8n-postgres container
 enter_pg:
