@@ -1,0 +1,118 @@
+# File: k8/deployment.yml
+# Two containers in two Services. This is more appropiate for cases where each container needs their own public port number.
+# 2022-02-25 | CR
+
+# IMPORTANT:
+# Replace exampleapp with the name of the project
+# Replace exampleapp_docker_account with the Docker Hub account where the images are stored
+# Replace exampleapp_secret_generic with the name of the secret where the environment variables are stored
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: exampleappfront
+spec:
+  selector:
+    app: exampleappfront
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 3001
+      # Port to forward to inside the pod
+      targetPort: 3001
+      # Port accessible outside cluster
+      # The range of valid ports is 30000-32767
+      nodePort: 30011
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: exampleappback
+spec:
+  selector:
+    app: exampleappback
+  ports:
+    - protocol: "TCP"
+      # Port accessible inside cluster
+      port: 5000
+      # Port to forward to inside the pod
+      targetPort: 5000
+      # Port accessible outside cluster
+      #  The range of valid ports is 30000-32767
+      nodePort: 30015
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exampleappfrontdep
+  labels:
+    app: exampleappfront
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: exampleappfront
+  template:
+    metadata:
+      labels:
+        app: exampleappfront
+    spec:
+      containers:
+
+        - name: exampleapp-frontend
+          image: exampleapp_docker_account/exampleapp_frontend:v0.1.1-amd64
+          ports:
+            - containerPort: 3001
+          env:
+            - name: REACT_APP_API_URL
+              valueFrom:
+                secretKeyRef:
+                  name: exampleapp_secret_generic
+                  key: exampleapp_backend_public_url
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exampleappbackdep
+  labels:
+    app: exampleappback
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: exampleappback
+  template:
+    metadata:
+      labels:
+        app: exampleappback
+    spec:
+      containers:
+        - name: exampleapp-backend
+          image: exampleapp_docker_account/exampleapp_backend:v0.1.1-amd64
+          ports:
+            - containerPort: 5000
+          env:
+            - name: FLASK_APP
+              value: "exampleapp_api"
+            - name: FLASK_ENV
+              value: "exampleapp_api"
+            - name: APP_DB_NAME
+              value: "exampleapp_dev"
+            - name: FLASK_DEBUG
+              value: "1"
+            - name: APP_DB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: exampleapp_secret_generic
+                  key: exampleapp_db_uri
+            - name: APP_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: exampleapp_secret_generic
+                  key: exampleapp_secret_key

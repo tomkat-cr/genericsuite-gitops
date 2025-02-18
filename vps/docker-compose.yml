@@ -1,0 +1,45 @@
+
+# IMPORTANT:
+# Replace exampleapp with the name of the project
+# Replace exampleapp_docker_account with the Docker Hub account where the images are stored
+# Replace exampleapp_secret_generic with the name of the secret where the environment variables are stored
+
+version: "3"
+
+services:
+  exampleapp_frontend:
+    container_name: exampleapp_frontend
+    image: exampleapp_docker_account/exampleapp_frontend:v${APP_VERSION}-amd64
+    # platform: linux/x86_64
+    restart: unless-stopped
+    ports:
+      - 3001:3001
+    expose:
+      - 3001
+    environment:
+      # - REACT_APP_API_URL=http://exampleapp_backend:5000
+      - REACT_APP_API_URL=$APP_REACT_APP_API_URL
+    networks:
+      - backend
+
+  exampleapp_backend:
+    container_name: exampleapp_backend
+    image: exampleapp_docker_account/exampleapp_backend:v${APP_VERSION}-amd64
+    # platform: linux/x86_64
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    expose:
+      - 5000
+    environment:
+      - FLASK_APP=exampleapp_api
+      - FLASK_ENV=exampleapp_api
+      - FLASK_DEBUG=0
+      - APP_DB_NAME=exampleapp_dev
+      - APP_DB_URI=$APP_DB_URI
+      - APP_SECRET_KEY=$APP_SECRET_KEY
+    networks:
+      - backend
+
+networks:
+  backend:
