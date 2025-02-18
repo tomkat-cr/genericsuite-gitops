@@ -165,7 +165,7 @@ if [ "$SUPABASE_TEST_COLUMN_NAME" = "" ]; then
     SUPABASE_TEST_COLUMN_NAME="session_id"
 fi
 if [ "$SUPABASE_TEST_COLUMN_VALUE" = "" ]; then
-    SUPABASE_TEST_COLUMN_VALUE="4843ad1a-b28b-45fe-a871-b69c0ee290b8"
+    SUPABASE_TEST_COLUMN_VALUE="<example_session_id_value>"
 fi
 if [ "$SUPABASE_TEST_ORDER_BY" = "" ]; then
     SUPABASE_TEST_ORDER_BY="created_at"

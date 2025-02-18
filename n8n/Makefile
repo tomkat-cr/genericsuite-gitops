@@ -18,7 +18,7 @@ run:
 stop:
 	bash run_n8n.sh stop
 
-# Stpos and removes n8n containers
+# Stops and removes n8n containers
 down:
 	bash run_n8n.sh down
 

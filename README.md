@@ -16,7 +16,10 @@
 - **VPS Deployment**: Prepare a VPS server with a fully configured environment to run your App.
 - **K8**: Deploy your App on a Kubernetes cluster.
 - **Docker**: Build and push your App to a Docker registry.
-- **Olama**: install and configure a local OLLAMA service.
+- **Olama**: Install and configure a local OLLAMA service.
+- **WebUI**: Run the local WebUI service.
+- **Stable Diffusion**: Install and configure a local Stable Diffusion service, annd run its WebUi.
+- **N8n**: Install and configure a local N8n service.
 
 ## Getting Started
 

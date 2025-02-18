@@ -18,7 +18,15 @@ firewall_manager() {
     local ufw_action=""
 
     if [ "$OS_TYPE" = "" ]; then
-	source ../scripts/get_os_name_type.sh
+    	if ! . ../scripts/get_os_name_type.sh
+        then
+            if ! source ../scripts/get_os_name_type.sh
+            then
+                echo ""
+                echo "Error: Could not get the OS name and type"
+                exit 1
+            fi
+        fi
     fi
 
     if [ "$OS_TYPE" = "debian" ]; then
