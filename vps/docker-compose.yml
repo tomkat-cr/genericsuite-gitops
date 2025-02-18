@@ -1,9 +1,15 @@
+
+# IMPORTANT:
+# Replace exampleapp with the name of the project
+# Replace exampleapp_docker_account with the Docker Hub account where the images are stored
+# Replace exampleapp_secret_generic with the name of the secret where the environment variables are stored
+
 version: "3"
 
 services:
   exampleapp_frontend:
     container_name: exampleapp_frontend
-    image: mediabros/exampleapp_frontend:v${APP_VERSION}-amd64
+    image: exampleapp_docker_account/exampleapp_frontend:v${APP_VERSION}-amd64
     # platform: linux/x86_64
     restart: unless-stopped
     ports:
@@ -18,7 +24,7 @@ services:
 
   exampleapp_backend:
     container_name: exampleapp_backend
-    image: mediabros/exampleapp_backend:v${APP_VERSION}-amd64
+    image: exampleapp_docker_account/exampleapp_backend:v${APP_VERSION}-amd64
     # platform: linux/x86_64
     restart: unless-stopped
     ports:

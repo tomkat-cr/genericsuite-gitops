@@ -5,20 +5,38 @@
 # Ref:
 # https://kubernetes.io/docs/tasks/inject-data-application/_print/
 #
-SECRET_GROUP="exampleappsecrets"
 CURRENT_DIR="`dirname "$0"`"
 GENERATE_SECRETS=1
 if [ ! -f "${CURRENT_DIR}/.env" ]; then
-    echo "Error [1]: Please define the .env file with the secrets, file: '${CURRENT_DIR}/.env'";
+    echo "Error [1.1]: Please define the .env file with the secrets, file: '${CURRENT_DIR}/.env'";
     GENERATE_SECRETS=0;
 else
-    . ${CURRENT_DIR}/get_defaults.sh
+    if ! . ${CURRENT_DIR}/get_defaults.sh
+    then
+        if ! source ${CURRENT_DIR}/.env
+        then
+            echo "Error [1.2]: Unable to get the variables from .env and get_defaults.sh";
+            GENERATE_SECRETS=0;
+        fi
+    fi
     if [ "${APP_DB_URI}" == "" ]; then
         echo "Error [2]: Missing APP_DB_URI variable...";
         GENERATE_SECRETS=0;
     fi
     if [ "${APP_SECRET_KEY}" == "" ]; then
         echo "Error [3]: Missing APP_SECRET_KEY variable...";
+        GENERATE_SECRETS=0;
+    fi
+    if [ "${SECRET_GROUP}" == "" ]; then
+        echo "Error [4]: Missing SECRET_GROUP variable...";
+        GENERATE_SECRETS=0;
+    fi
+    if [ "${APP_BACKEND_PUBLIC_URL}" == "" ]; then
+        echo "Error [5]: Missing APP_BACKEND_PUBLIC_URL variable...";
+        GENERATE_SECRETS=0;
+    fi
+    if [ "${APP_BACKEND_PORT}" == "" ]; then
+        echo "Error [6]: Missing APP_BACKEND_PORT variable...";
         GENERATE_SECRETS=0;
     fi
 fi

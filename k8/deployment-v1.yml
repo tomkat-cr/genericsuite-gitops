@@ -2,6 +2,11 @@
 # Two containers in the same Service. This is not good for cases where each container needs their own public port number.
 # 2022-02-25 | CR
 
+# IMPORTANT:
+# Replace exampleapp with the name of the project
+# Replace exampleapp_docker_account with the Docker Hub account where the images are stored
+# Replace exampleapp_secret_generic with the name of the secret where the environment variables are stored
+
 ---
 apiVersion: v1
 kind: Service
@@ -42,7 +47,7 @@ spec:
       containers:
 
         - name: exampleapp-frontend
-          image: mediabros/exampleapp_frontend:v0.1.1-amd64
+          image: exampleapp_docker_account/exampleapp_frontend:v0.1.1-amd64
           ports:
             - containerPort: 3001
           env:
@@ -54,7 +59,7 @@ spec:
               value: "https://${BACKEND_URL}:5000"
 
         - name: exampleapp-backend
-          image: mediabros/exampleapp_backend:v0.1.1-amd64
+          image: exampleapp_docker_account/exampleapp_backend:v0.1.1-amd64
           ports:
             - containerPort: 5000
           env:
@@ -69,10 +74,10 @@ spec:
             - name: APP_DB_URI
               valueFrom:
                 secretKeyRef:
-                  name: exampleappsecrets
+                  name: exampleapp_secret_generic
                   key: exampleapp_db_uri
             - name: APP_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: exampleappsecrets
+                  name: exampleapp_secret_generic
                   key: exampleapp_secret_key
