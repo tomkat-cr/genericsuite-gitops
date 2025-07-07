@@ -15,7 +15,7 @@ run_done() {
 
 run_help() {
     echo ""
-    echo "Usage: $0 run|stop|install|update|open|close"
+    echo "Usage: $0 run|stop|install|update|update_watchtower|open|close"
     echo ""
     exit 0
 }
@@ -43,7 +43,7 @@ run_webui() {
     echo ""
     docker ps
     echo ""
-    echo "Wainting 50 seconds"
+    echo "Waiting 50 seconds"
     sleep 50
     echo ""
     echo "Please check that open-webui container is running..."
@@ -200,8 +200,13 @@ if [ "$ACTION" = "update" ]; then
     run_done
 fi
 
-if [ "$ACTION" = "update_wo" ]; then
+if [ "$ACTION" = "update_watchtower" ]; then
+    echo ""
+    echo "Updating open-webui container using Watchtower (run-once mode)..."
+    echo ""
     docker run --rm --volume /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower --run-once open-webui
+    echo ""
+    docker ps
     run_done
 fi
 
