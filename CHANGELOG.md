@@ -21,7 +21,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### New
 Add documentation to replace exampleapp and other example names to the app specific ones [GS-141].
-Add "webUi" update with sh `run_webui.sh update`.
+Add WebUI update with sh `run_webui.sh update`.
 
 ### Changes
 SECRET_GROUP envvar moved from apply_secrets.sh to .env [GS-141].
@@ -50,9 +50,9 @@ Add WEBHOOK_URL to n8n service to customize the endpoint server base URL.
 Add firewall manager [GS-141].
 
 ### Changes
-Enhanced webui run with GPU support and opening the web port [GS-139].
+Enhanced WebUI run with GPU support and opening the web port [GS-139].
 Better version check in docker installer [GS-141].
-NVIDIA container-toolkit install in run_webui [GS-139].
+NVIDIA container-toolkit install in "run_webui.sh" [GS-139].
 
 ### Fixes
 Fix sudo in the script (not running it) to minikube install and start [GS-141].

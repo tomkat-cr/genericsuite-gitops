@@ -28,16 +28,15 @@ run_webui() {
     docker stop open-webui && docker rm open-webui
     if [ "$RUN_WITH_GPU" = "0" ]; then
         # With NO GPU
-        # docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main
-	echo ""
-	echo "Running open-webui with NO GPU"
-	echo ""
+        echo ""
+        echo "Running open-webui with NO GPU"
+        echo ""
         docker run -d -p $WEBUI_PORT:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
     else
         # With GPU
-	echo ""
-	echo "Running open-webui WITH GPU support..."
-	echo ""
+        echo ""
+        echo "Running open-webui WITH GPU support..."
+        echo ""
         docker run -d -p $WEBUI_PORT:8080 --gpus all --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:cuda
     fi
     echo ""
@@ -134,6 +133,7 @@ if [ "$ACTION" = "install" ]; then
 
         $SUDO_CMD yum install -y nvidia-container-toolkit
     else
+        echo ""
         echo "Linux distro [$OS_TYPE] is not supported"
         exit 1
     fi
@@ -150,17 +150,20 @@ if [ "$ACTION" = "install" ]; then
 
     echo ""
     echo "Restart the Docker daemon"
+    echo ""
 
     $SUDO_CMD systemctl restart docker
 
     echo ""
     echo "Done! NVIDIA container-toolkit install was completed."
+    echo ""
     run_done
 fi
 
 if [ "$ACTION" = "open" ]; then
     echo ""
     echo "Opening public access to port ${WEBUI_PORT} in the firewall"
+    echo ""
     sh ../scripts/firewall_manager.sh open ${WEBUI_PORT}
     run_done
 fi
@@ -168,6 +171,7 @@ fi
 if [ "$ACTION" = "close" ]; then
     echo ""
     echo "Closing public access to port ${WEBUI_PORT} in the firewall"
+    echo ""
     sh ../scripts/firewall_manager.sh close ${WEBUI_PORT}
     run_done
 fi
