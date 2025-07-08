@@ -7,13 +7,56 @@
 # https://github.com/open-webui/open-webui?tab=readme-ov-file#installation-with-default-configuration
 # https://ntck.co/ep_401
 
+run_done() {
+    echo ""
+    echo "Done!"
+    exit 0
+}
+
+run_help() {
+    echo ""
+    echo "Usage: $0 run|stop|install|update|update_watchtower|open|close"
+    echo ""
+    exit 0
+}
+
+run_webui() {
+    # Stop and remove any previous container
+    echo ""
+    echo "Stopping open-webui..."
+    echo ""
+    docker stop open-webui && docker rm open-webui
+    if [ "$RUN_WITH_GPU" = "0" ]; then
+        # With NO GPU
+        echo ""
+        echo "Running open-webui with NO GPU"
+        echo ""
+        docker run -d -p $WEBUI_PORT:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+    else
+        # With GPU
+        echo ""
+        echo "Running open-webui WITH GPU support..."
+        echo ""
+        docker run -d -p $WEBUI_PORT:8080 --gpus all --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:cuda
+    fi
+    echo ""
+    docker ps
+    echo ""
+    echo "Waiting 50 seconds"
+    sleep 50
+    echo ""
+    echo "Please check that open-webui container is running..."
+    echo ""
+    docker ps
+}
+
 REPO_BASEDIR="`pwd`"
 cd "`dirname "$0"`"
 SCRIPTS_DIR="`pwd`"
 
 SUDO_CMD=""
 if [ $(whoami) != "root" ] ; then
-	SUDO_CMD="sudo"
+    SUDO_CMD="sudo"
 fi
 
 if [ "$RUN_WITH_GPU" = "" ]; then
@@ -90,6 +133,7 @@ if [ "$ACTION" = "install" ]; then
 
         $SUDO_CMD yum install -y nvidia-container-toolkit
     else
+        echo ""
         echo "Linux distro [$OS_TYPE] is not supported"
         exit 1
     fi
@@ -106,43 +150,71 @@ if [ "$ACTION" = "install" ]; then
 
     echo ""
     echo "Restart the Docker daemon"
+    echo ""
 
     $SUDO_CMD systemctl restart docker
 
     echo ""
     echo "Done! NVIDIA container-toolkit install was completed."
+    echo ""
+    run_done
 fi
 
 if [ "$ACTION" = "open" ]; then
     echo ""
     echo "Opening public access to port ${WEBUI_PORT} in the firewall"
+    echo ""
     sh ../scripts/firewall_manager.sh open ${WEBUI_PORT}
+    run_done
 fi
 
 if [ "$ACTION" = "close" ]; then
     echo ""
     echo "Closing public access to port ${WEBUI_PORT} in the firewall"
+    echo ""
     sh ../scripts/firewall_manager.sh close ${WEBUI_PORT}
+    run_done
 fi
 
 if [ "$ACTION" = "stop" ]; then
     # Stop and remove any previous container
     docker stop open-webui && docker rm open-webui
     docker ps
+    run_done
 fi
 
 if [ "$ACTION" = "run" ]; then
-    # Stop and remove any previous container
-    docker stop open-webui && docker rm open-webui
-    if [ "$RUN_WITH_GPU" = "0" ]; then
-        # With NO GPU
-        # docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main
-        docker run -d -p $WEBUI_PORT:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
-    else
-        # With GPU
-        docker run -d -p $WEBUI_PORT:8080 --gpus all --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:cuda
-    fi
-    docker ps
-    sleep 50
-    docker ps
+    run_webui
+    run_done
 fi
+
+if [ "$ACTION" = "update" ]; then
+    echo ""
+    echo "Removing existing open-webui container..."
+    echo ""
+    docker rm -f open-webui
+    echo ""
+    echo "Pulling new open-webui docker image version..."
+    echo ""
+    docker pull ghcr.io/open-webui/open-webui:main
+    docker pull ghcr.io/open-webui/open-webui:cuda
+    echo ""
+    echo "Re-running container..."
+    run_webui
+    run_done
+fi
+
+if [ "$ACTION" = "update_watchtower" ]; then
+    echo ""
+    echo "Updating open-webui container using Watchtower (run-once mode)..."
+    echo ""
+    docker run --rm --volume /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower --run-once open-webui
+    echo ""
+    docker ps
+    run_done
+fi
+
+echo ""
+echo "Invalid option: '$ACTION'"
+echo ""
+run_help
