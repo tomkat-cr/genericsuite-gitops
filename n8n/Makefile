@@ -1,12 +1,10 @@
 # .DEFAULT_GOAL := local
-# .PHONY: tests
+.PHONY: help run stop down logs update restart open close force-recreate enter_pg enter_n8n
 SHELL := /bin/bash
 
 # General Commands
 help:
 	cat Makefile
-
-.PHONY: help
 
 # Application Specific Commands
 

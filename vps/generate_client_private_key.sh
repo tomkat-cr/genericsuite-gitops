@@ -5,6 +5,9 @@
 # IMPORTANT: This script must be executed on the local PC, not on the Server.
 # 2022-03-07 | CR
 
+set -euo pipefail
+IFS=$'\n\t'
+
 createKey=1;
 if [ "$1" = "" ]; then
     echo "";
@@ -46,39 +49,38 @@ if [ $createKey -eq 1 ]; then
     read answer ;
     echo "";
 
-    ssh-keygen -b 4096 ;
+    # Create the key directly at the final path to avoid renames
+    ssh-keygen -b 4096 -f "${HOME}/.ssh/${VPS_ID_RSA_FILENAME}" -C "${VPS_USER}@${VPS_NAME}" || true
 
     echo "" ;
-    echo "The keys should have been created: a public 'id_rsa.pub' and a private 'id_rsa'" ;
-    echo "In the [~/$USER/.ssh] directory of your user." ;
-    echo "Those files will be renamed to: ${VPS_ID_RSA_FILENAME}" ;
-
-    echo "" ;
-    echo "Press ENTER to continue or Ctrl-C to cancel." ;
-    read answer ;
-    echo "";
-
-    cd ~/.ssh ;
-    mv id_rsa ${VPS_ID_RSA_FILENAME} ;
-    mv id_rsa.pub ${VPS_ID_RSA_FILENAME}.pub ;
-
-    echo "" ;
-    echo "The next step will ask for your password (to have root privileges) so it can change the keys attributes:" ;
+    echo "The keys should have been created in [${HOME}/.ssh]:" ;
+    echo "- ${VPS_ID_RSA_FILENAME} (private)" ;
+    echo "- ${VPS_ID_RSA_FILENAME}.pub (public)" ;
 
     echo "" ;
     echo "Press ENTER to continue or Ctrl-C to cancel." ;
     read answer ;
     echo "";
 
-    sudo chmod 600 ${VPS_ID_RSA_FILENAME} ;
-    sudo chmod 600 ${VPS_ID_RSA_FILENAME}.pub ;
+    cd "${HOME}/.ssh" ;
+
+    echo "" ;
+    echo "The next step will set secure permissions on the keys:" ;
+
+    echo "" ;
+    echo "Press ENTER to continue or Ctrl-C to cancel." ;
+    read answer ;
+    echo "";
+
+    chmod 600 "${VPS_ID_RSA_FILENAME}" || true ;
+    chmod 644 "${VPS_ID_RSA_FILENAME}.pub" || true ;
 
     echo "" ;
     echo "The keys are now:"
     echo "" ;
 
-    ls -lah ${VPS_ID_RSA_FILENAME} ;
-    ls -lah ${VPS_ID_RSA_FILENAME}.pub ;
+    ls -lah "${VPS_ID_RSA_FILENAME}" ;
+    ls -lah "${VPS_ID_RSA_FILENAME}.pub" ;
 
     echo "" ;
     echo "Press ENTER to continue or Ctrl-C to cancel." ;
@@ -87,21 +89,21 @@ if [ $createKey -eq 1 ]; then
 
     echo "" ;
     echo "Now the public key will be uploaded to the server using 'ssh-copy-id'." ;
-    echo "ssh-copy-id creates an authorized-keys file in /home/user/.sh/ on the destination server." ;
+    echo "ssh-copy-id creates/updates the authorized_keys file in /home/<user>/.ssh/ on the destination server." ;
 
     echo "" ;
     echo "Press ENTER to continue or Ctrl-C to cancel." ;
     read answer ;
     echo "";
 
-    ssh-copy-id -i ${VPS_ID_RSA_FILENAME}.pub ${VPS_USER}@${VPS_NAME} ;
+    ssh-copy-id -i "${VPS_ID_RSA_FILENAME}.pub" "${VPS_USER}@${VPS_NAME}" ;
 
     echo "" ;
     echo "If there are complaints about the server footprint changing, e.g.:" ;
     echo "ERROR: @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @" ;
     echo "" ;
     echo "Run the command:" ;
-    echo "   sudo nano ~/.ssh/known_hosts" ;
+    echo "   nano ~/.ssh/known_hosts" ;
     echo "" ;
     echo "And delete the lines that have the IP and/or domain of the server." ;
 
@@ -113,5 +115,5 @@ if [ $createKey -eq 1 ]; then
     read answer ;
     echo "";
 
-    ssh -i ${VPS_ID_RSA_FILENAME} ${VPS_USER}@${VPS_NAME} ;
+    ssh -i "${VPS_ID_RSA_FILENAME}" "${VPS_USER}@${VPS_NAME}" ;
 fi
