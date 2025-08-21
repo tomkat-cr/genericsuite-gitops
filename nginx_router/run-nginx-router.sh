@@ -16,16 +16,25 @@ if [ -z "$ACTION" ]; then
     exit 1
 fi
 if [ "$ACTION" = "restart" ]; then
-    echo "Restarting services..."
+    echo "Restarting nginx-router services..."
     docker compose restart
+    docker ps
     exit 0
 elif [ "$ACTION" = "run" ]; then
-    echo "Starting services..."
+    echo "Starting nginx-router services..."
+    if ! docker network create my_shared_network
+    then
+        echo ""
+        echo "Network my_shared_network already exists"
+        echo ""
+    fi
     docker compose up -d
+    docker ps
     exit 0
 elif [ "$ACTION" = "down" ]; then
-    echo "Stopping services..."
+    echo "Stopping nginx-router services..."
     docker compose down
+    docker ps
     exit 0
 else
     echo "Error: Invalid action specified"

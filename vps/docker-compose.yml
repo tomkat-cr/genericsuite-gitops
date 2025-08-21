@@ -20,6 +20,7 @@ services:
       - REACT_APP_API_URL=$APP_REACT_APP_API_URL
     networks:
       - backend
+      # - my_shared_network
 
   exampleapp_backend:
     container_name: ${APP_NAME:-exampleapp}_backend
@@ -39,6 +40,10 @@ services:
       - APP_SECRET_KEY=$APP_SECRET_KEY
     networks:
       - backend
+      # - my_shared_network
 
 networks:
   backend:
+
+# my_shared_network:
+#   external: true # Reference the same external network as the other services

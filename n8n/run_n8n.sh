@@ -16,7 +16,7 @@ if [ -f ".env" ]; then
     set -o allexport
     if ! source .env
     then
-	. .env 
+    	. .env 
     fi
     set +o allexport
 else
@@ -82,6 +82,12 @@ if [ "$ACTION" = "run" ]; then
     echo ""
     echo "Starting n8n"
     echo ""
+    if ! docker network create my_shared_network
+    then
+        echo ""
+        echo "Network my_shared_network already exists"
+        echo ""
+    fi
     docker compose up -d
     docker ps
     echo ""
