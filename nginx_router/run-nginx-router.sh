@@ -17,15 +17,15 @@ if [ -z "$ACTION" ]; then
 fi
 if [ "$ACTION" = "restart" ]; then
     echo "Restarting services..."
-    docker-compose restart
+    docker compose restart
     exit 0
 elif [ "$ACTION" = "run" ]; then
     echo "Starting services..."
-    docker-compose up -d
+    docker compose up -d
     exit 0
 elif [ "$ACTION" = "down" ]; then
     echo "Stopping services..."
-    docker-compose down
+    docker compose down
     exit 0
 else
     echo "Error: Invalid action specified"
