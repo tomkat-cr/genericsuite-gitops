@@ -6,11 +6,9 @@ REPO_BASEDIR="`pwd`"
 cd "`dirname "$0"`"
 SCRIPTS_DIR="`pwd`"
 
-if [ ! -f ./.env ]; then
-    echo "Error: .env file not found"
-    exit 1
+if [ -f ./.env ]; then
+    set -o allexport; . ./.env; set +o allexport ;
 fi
-set -o allexport; . ./.env; set +o allexport ;
 
 ACTION=$1
 if [ -z "$ACTION" ]; then

@@ -119,6 +119,12 @@ make clean
 make help
 ```
 
+- Create auto-signed SSL certificates (crt/key):
+
+```bash
+make ssl
+```
+
 Notes:
 
 - `make up`/`down`/`restart` call the wrapper script which uses `docker-compose` under the hood. Ensure your `docker-compose.yml` matches the expected mounts:

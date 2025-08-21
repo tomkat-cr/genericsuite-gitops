@@ -1,7 +1,7 @@
 # Nginx Router Makefile
 # Manages Docker Compose services for production deployment
 
-.PHONY: help up down restart logs clean status
+.PHONY: help up down restart logs clean status ssl
 
 # Default target
 help:
@@ -13,6 +13,7 @@ help:
 	@echo "  logs-f      - Follow logs for all services"
 	@echo "  clean       - Stop services and remove volumes"
 	@echo "  status      - Show service status"
+	@echo "  ssl         - Create auto-signed SSL certificates (crt/key)"
 
 # Start all services
 up:
@@ -45,3 +46,7 @@ clean:
 # Show service status
 status:
 	docker-compose ps
+
+# Create auto-signed SSL certificates (crt/key)
+ssl:
+	bash local_ssl_certs_creation.sh
