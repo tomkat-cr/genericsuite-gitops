@@ -94,10 +94,10 @@ sh gitlab_runner_run.sh upgrade-version
 sh gitlab_runner_run.sh update-config
 
 # Connectivity check (defaults to GitLab Runners API)
-sh gitlab_runner_run.sh check-conectivity
+sh gitlab_runner_run.sh check-connectivity
 
 # Connectivity check to a custom URL
-sh gitlab_runner_run.sh check-conectivity https://gitlab.com/api/v4/runners
+sh gitlab_runner_run.sh check-connectivity https://gitlab.com/api/v4/runners
 ```
 
 Notes:

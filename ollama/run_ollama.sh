@@ -32,9 +32,6 @@ run_update() {
     echo ""
     echo "Updating ollama..."
     echo ""
-    if  [ -d "/usr/lib/ollama" ]; then
-        ${SUDO_CMD} rm -rf /usr/lib/ollama
-    fi
     curl -fsSL https://ollama.com/install.sh | sh
     if [ $? -ne 0 ]; then
         echo ""
@@ -62,7 +59,7 @@ run_stop() {
     fi
     echo ""
     echo "Checking if Ollama is running..."
-    if ollama --version
+    if systemctl is-active --quiet ollama.service;
     then
         echo ""
         echo "Failed to stop Ollama, it's still running"

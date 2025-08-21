@@ -22,11 +22,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Add memory bank documents in the "specs" directory [GS-208].
 - Add "README.md" and "Makefile" files to the "ollama", "n8n", "k8", "docker", "gitlab_runner", "vps", and "scripts" directories [GS-231].
 - Improved user experience with additional helper scripts and commands, e.g. Tmux cheatsheet [GS-231].
+- Add nginx router module [GS-180] [GS-234].
 
 ### Changed
 - Update CHANGELOG format to be more semantic [GS-222].
 - "vps" scripts enhanced to implement better linux server practices [GS-231].
 
+### Fixed
+- Fix connectivity checks across services [GS-231]
 
 ## [0.3.0] - 2025-07-07
 

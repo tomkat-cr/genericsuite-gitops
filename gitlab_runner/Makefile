@@ -6,7 +6,7 @@ help:
 
 # Variables
 SCRIPT := ./gitlab_runner_run.sh
-URL ?= http://gitlab.com/api/v4/runners
+URL ?= https://gitlab.com/api/v4/runners
 
 # Convenience targets mapping to script actions
 start:
@@ -34,7 +34,7 @@ privileged:
 	sh $(SCRIPT) enable-privileged
 
 check:
-	sh $(SCRIPT) check-conectivity $(URL)
+	sh $(SCRIPT) check-connectivity $(URL)
 
 selinux-fix:
 	sh $(SCRIPT) install-selinux-dockersock
