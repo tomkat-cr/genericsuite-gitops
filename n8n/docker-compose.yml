@@ -60,8 +60,6 @@ services:
       - WEBHOOK_URL=${WEBHOOK_URL}
     ports:
       - 5678:5678
-    networks:
-      - my_shared_network
     links:
       - postgres
     volumes:
@@ -69,6 +67,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - my_shared_network
 
 networks:
   my_shared_network:
