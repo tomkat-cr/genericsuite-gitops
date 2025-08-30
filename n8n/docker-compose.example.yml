@@ -30,6 +30,8 @@ services:
       retries: 10
     ports:
       - 5432:5432
+    networks:
+      - my_shared_network
 
   pgadmin:
     image: dpage/pgadmin4
@@ -45,6 +47,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - my_shared_network
 
   n8n:
     image: docker.n8n.io/n8nio/n8n
@@ -58,6 +62,7 @@ services:
       - DB_POSTGRESDB_PASSWORD=${POSTGRES_NON_ROOT_PASSWORD}
       - N8N_SECURE_COOKIE=${N8N_SECURE_COOKIE}
       - WEBHOOK_URL=${WEBHOOK_URL}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=${N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS:-true}
     ports:
       - 5678:5678
     links:

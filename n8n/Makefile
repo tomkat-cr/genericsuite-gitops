@@ -10,7 +10,7 @@ help:
 
 # Runs n8n in detached mode
 run:
-	bash run_n8n.sh
+	bash run_n8n.sh run
 
 # Stops n8n
 stop:
@@ -50,3 +50,8 @@ enter_pg:
 # Enter to the n8n container
 enter_n8n:
 	docker exec -ti n8n-n8n-1 sh
+
+# Initialize n8n configuration
+init:
+	bash run_n8n.sh init
+
