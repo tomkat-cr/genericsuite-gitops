@@ -15,6 +15,7 @@ help:
 	@echo "  clean       - Stop services and remove volumes"
 	@echo "  status      - Show service status"
 	@echo "  ssl         - Create auto-signed SSL certificates (crt/key)"
+	@echo "  init        - Initialize nginx-router configuration"
 
 # Start all services
 run:
@@ -53,3 +54,6 @@ status:
 # Create auto-signed SSL certificates (crt/key)
 ssl:
 	bash ./local_ssl_certs_creation.sh
+
+init:
+	bash ./run-nginx-router.sh init
