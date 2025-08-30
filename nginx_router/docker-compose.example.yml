@@ -3,6 +3,7 @@ services:
     image: nginx:alpine
     volumes:
       - ./conf.d:/etc/nginx/conf.d:ro
+      - ./index-custom.html:/usr/share/nginx/html/index-custom.html:ro
       - ./ssl:/etc/nginx/ssl:ro
     ports: ["80:80", "443:443"]
     extra_hosts:
