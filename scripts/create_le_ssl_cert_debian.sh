@@ -19,6 +19,17 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No color
 
+echo "----------------------------------------"
+echo ""
+echo "Creating a Let's Encrypt SSL certificate for Debian/Ubuntu with NGINX"
+echo ""
+echo "Script directory: ${SCRIPTS_DIR}"
+echo "Repository base directory: ${REPO_BASEDIR}"
+echo ""
+echo "Nginx Router www directory: ${REPO_BASEDIR}/nginx_router/www"
+echo "Destination directory: ${DESTINATION_DIR}"
+echo "----------------------------------------"
+
 # 1. Ask for the domain and email
 echo -e "${YELLOW}Please enter your domain name (e.g: ejemplo.com):${NC}"
 read -r DOMAIN
@@ -39,7 +50,8 @@ echo -e "${GREEN}--- Step 1: Updating the system and installing Certbot... ---${
 echo -e "${YELLOW}--- IMPORTANT: this will ask for your password to have root privileges ---${NC}"
 
 sudo apt-get update
-sudo apt-get install -y certbot python3-certbot-nginx
+# sudo apt-get install -y certbot python3-certbot-nginx
+sudo apt-get install -y certbot
 
 if ! command -v certbot &> /dev/null
 then
@@ -54,10 +66,11 @@ sleep 2
 echo -e "${GREEN}--- Step 2: Requesting the SSL certificate for ${DOMAIN}... ---${NC}"
 echo -e "${YELLOW}--- IMPORTANT: this will eventually ask for your password to have root privileges ---${NC}"
 
-# Use --non-interactive to prevent the script from stopping to ask for confirmation
-# --agree-tos accept the terms of service
-# --redirect configure NGINX to redirect HTTP to HTTPS automatically
-sudo certbot --nginx --non-interactive --agree-tos -d "$DOMAIN" -m "$EMAIL" --redirect
+# # Use --non-interactive to prevent the script from stopping to ask for confirmation
+# # --agree-tos accept the terms of service
+# # --redirect configure NGINX to redirect HTTP to HTTPS automatically
+# sudo certbot --nginx --non-interactive --agree-tos -d "$DOMAIN" -m "$EMAIL" --redirect
+sudo certbot certonly --webroot -w "${REPO_BASEDIR}/nginx_router/www" -d "$DOMAIN" -m "$EMAIL" --deploy-hook "sudo cp /etc/letsencrypt/live/${DOMAIN}/* ${DESTINATION_DIR}/"
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}Error: The certificate acquisition failed. Check the domain and NGINX configuration.${NC}"
