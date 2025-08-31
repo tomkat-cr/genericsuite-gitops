@@ -66,7 +66,7 @@ ssl-debian:
 	bash ../scripts/create_le_ssl_cert_debian.sh
 
 # Create letsencrypt SSL certificates (crt/key)
-ssl: ssl-le-debian
+ssl: ssl-debian
 
 init:
 	bash ./run-nginx-router.sh init
