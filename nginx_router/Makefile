@@ -33,7 +33,9 @@ restart-docker:
 
 # Restart all services
 restart: restart-docker logs-f
-	
+
+hard-restart: down up
+
 # Show logs
 logs:
 	docker compose logs
@@ -52,8 +54,19 @@ status:
 	docker compose ps
 
 # Create auto-signed SSL certificates (crt/key)
-ssl:
-	bash ./local_ssl_certs_creation.sh
+ssl-auto:
+	bash ../scripts/create_local_ssl_certs.sh
+
+# Create letsencrypt SSL certificates (crt/key) for macOS
+ssl-macos:
+	bash ../scripts/create_le_ssl_cert_macos.sh
+
+# Create letsencrypt SSL certificates (crt/key) for Debian/Ubuntu
+ssl-debian:
+	bash ../scripts/create_le_ssl_cert_debian.sh
+
+# Create letsencrypt SSL certificates (crt/key)
+ssl: ssl-le-debian
 
 init:
 	bash ./run-nginx-router.sh init

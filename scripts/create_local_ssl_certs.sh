@@ -1,10 +1,24 @@
 #!/bin/sh
-# local_ssl_certs_creation.sh
+# create_local_ssl_certs.sh
 # 2025-08-21 | CR
 #
+
+cd "`dirname "$0"`"
+SCRIPTS_DIR="`pwd`"
+cd ..
 REPO_BASEDIR="`pwd`"
-# Script directory and change to it
-SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
+# Parameters
+
+if [ "${DESTINATION_DIR}" = "" ]; then
+    # Default destination directory is nginx_router/ssl
+    DESTINATION_DIR="${REPO_BASEDIR}/nginx_router/ssl"
+fi
+
+# ".env" file path
+if [ "${ENV_FILE_PATH}" = "" ]; then
+    ENV_FILE_PATH="${REPO_BASEDIR}/.env"
+fi
 
 install_mkcert_linux_common() {
     if ! curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
@@ -86,8 +100,8 @@ echo "Create auto-signed SSL certificates (crt/key)"
 set -e
 
 # Load environment variables
-if [ -f ./.env ]; then
-    set -o allexport; . ./.env; set +o allexport ;
+if [ -f "${ENV_FILE_PATH}" ]; then
+    set -o allexport; . "${ENV_FILE_PATH}" ; set +o allexport ;
 fi
 
 # Default values
@@ -111,7 +125,7 @@ fi
 
 destination_dir="$2"
 if [ "${destination_dir}" = "" ]; then
-    destination_dir="./ssl"
+    destination_dir="${DESTINATION_DIR}"
 fi
 
 # Directories

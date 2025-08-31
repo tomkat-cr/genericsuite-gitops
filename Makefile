@@ -40,3 +40,44 @@ docker:
 gitlab_runner:
 	@cat gitlab_runner/Makefile
 
+nginx-router:
+	@cat nginx_router/Makefile
+
+nginx-router-init:
+	cd nginx_router && make init
+
+nginx-router-run:
+	cd nginx_router && make run
+
+nginx-router-down:
+	cd nginx_router && make down
+
+nginx-router-restart:
+	cd nginx_router && make restart
+
+nginx-router-hard-restart:
+	cd nginx_router && make hard-restart
+
+nginx-router-logs-f:
+	cd nginx_router && make logs-f
+
+nginx-router-status:
+	cd nginx_router && make status
+
+nginx-router-clean:
+	cd nginx_router && make clean
+
+# Create auto-signed SSL certificates (crt/key)
+nginx-router-ssl-auto:
+	bash ./scripts/create_local_ssl_certs.sh
+
+# Create letsencrypt SSL certificates (crt/key) for macOS
+nginx-router-ssl-macos:
+	bash ./scripts/create_le_ssl_cert_macos.sh
+
+# Create letsencrypt SSL certificates (crt/key) for Debian/Ubuntu
+nginx-router-ssl-debian:
+	bash ./scripts/create_le_ssl_cert_debian.sh
+
+# Create letsencrypt SSL certificates (crt/key)
+nginx-router-ssl: nginx-router-ssl-debian

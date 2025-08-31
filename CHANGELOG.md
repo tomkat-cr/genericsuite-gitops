@@ -18,18 +18,22 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ## [0.4.0] - 2025-08-08
 
 ### Added
+- Add Nginx Router module [GS-180] [GS-234].
+- Add SSL certificate generation with Let's Encrypt [GS-180].
+- Add "README.md" and "Makefile" files to the "ollama", "n8n", "k8", "docker", "gitlab_runner", "vps", and "scripts" directories [GS-231].
 - Add "ollama_update" to ollama manager [GS-229].
 - Add memory bank documents in the "specs" directory [GS-208].
-- Add "README.md" and "Makefile" files to the "ollama", "n8n", "k8", "docker", "gitlab_runner", "vps", and "scripts" directories [GS-231].
 - Improved user experience with additional helper scripts and commands, e.g. Tmux cheatsheet [GS-231].
-- Add nginx router module [GS-180] [GS-234].
 
 ### Changed
 - Update CHANGELOG format to be more semantic [GS-222].
-- "vps" scripts enhanced to implement better linux server practices [GS-231].
+- Vps - scripts enhanced to implement better linux server practices [GS-231].
+- N8n - add init command and gitignore docker configuration files [GS-141].
+- Change restart policy to 'unless-stopped' for n8n, postgres, and pgadmin services [GS-141].
 
 ### Fixed
 - Fix connectivity checks across services [GS-231]
+
 
 ## [0.3.0] - 2025-07-07
 
