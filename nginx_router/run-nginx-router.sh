@@ -60,6 +60,11 @@ elif [ "$ACTION" = "init" ]; then
         echo "Copying docker-compose.example.yml to docker-compose.yml"
         cp ./docker-compose.example.yml ./docker-compose.yml
     fi
+    if [ ! -f ./index-custom.html ]; then
+        echo ""
+        echo "Copying index-custom.example.html to index-custom.html"
+        cp ./index-custom.example.html ./index-custom.html
+    fi
     exit 0
 else
     echo "Error: Invalid action specified"
