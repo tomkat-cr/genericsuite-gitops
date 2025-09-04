@@ -15,7 +15,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
-## [0.4.0] - 2025-09-03
+## [0.4.0] - 2025-09-04
 
 ### Added
 - Add Nginx Router module [GS-180] [GS-234].
