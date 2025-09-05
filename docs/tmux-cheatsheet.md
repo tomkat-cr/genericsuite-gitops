@@ -21,7 +21,7 @@ Tmux commands are typically initiated with a prefix key, which is Ctrl+b by defa
 - Ctrl+b x: Close the current pane.
 - Ctrl+b z: Toggle zoom for the current pane (maximizes/restores).
 - Ctrl+b ;: Move to the previously active pane.
-- Ctrl+b :resize-pane -[direction] [amount]: Resize the current pane (e.g., -L 5 to move the left boundary left by 5 units). 
+- Ctrl+b :resize-pane -[direction] [amount]: Resize the current pane (e.g., -L 5 to move the left boundary left by 5 units).
 
 ## Session Management:
 
@@ -35,6 +35,6 @@ Tmux commands are typically initiated with a prefix key, which is Ctrl+b by defa
 ## Other Useful Commands:
 
 - Ctrl+b ?: Display a list of all key bindings.
-- Ctrl+b [: Enter copy mode to scroll and copy text from the buffer. 
+- Ctrl+b [: Enter copy mode to scroll and copy text from the buffer.
 - Ctrl+b ]: Paste the most recently copied text.
 - Ctrl+b :: Enter the tmux command prompt to type commands directly.

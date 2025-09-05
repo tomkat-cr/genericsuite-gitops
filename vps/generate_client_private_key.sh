@@ -72,8 +72,14 @@ if [ $createKey -eq 1 ]; then
     read answer ;
     echo "";
 
-    chmod 600 "${VPS_ID_RSA_FILENAME}" || true ;
-    chmod 644 "${VPS_ID_RSA_FILENAME}.pub" || true ;
+    if ! chmod 600 "${VPS_ID_RSA_FILENAME}" ; then
+        echo "ERROR: The private key could not be set to secure permissions." ;
+        exit 1 ;
+    fi
+    if ! chmod 644 "${VPS_ID_RSA_FILENAME}.pub" ; then
+        echo "ERROR: The public key could not be set to secure permissions." ;
+        exit 1 ;
+    fi
 
     echo "" ;
     echo "The keys are now:"

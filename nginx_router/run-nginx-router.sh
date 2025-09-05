@@ -34,7 +34,7 @@ elif [ "$ACTION" = "run" ]; then
         if ! docker network create my_shared_network
         then
             echo ""
-            echo "Network my_shared_network already exists"
+            echo "ERROR creating Docker Network: my_shared_network"
             echo ""
         fi
     fi

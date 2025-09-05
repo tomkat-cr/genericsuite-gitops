@@ -140,7 +140,7 @@ nginx_router/
 ├─ README.md  ← this file
 ├─ docker-compose.example.yml
 ├─ nginx.example.conf
-├─ run-server.sh
+├─ run-nginx-router.sh
 └─ ssl/
    └─ .gitignore
 ```

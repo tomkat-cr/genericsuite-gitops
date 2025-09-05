@@ -84,8 +84,12 @@ then
 		echo "User '$ocr_user' already exists. Skipping creation."
 	fi
 	echo ""
-	echo "Add user '$ocr_user' to the '$docker_group' group..."
-	$SUDO_CMD usermod -a -G "$docker_group" "$ocr_user" || true;
+	if ! groups "$ocr_user" | grep -q "\b$docker_group\b"; then
+		echo "Add user '$ocr_user' to the '$docker_group' group..."
+		$SUDO_CMD usermod -a -G "$docker_group" "$ocr_user" || true;
+	else
+		echo "User '$ocr_user' already belongs to the '$docker_group' group. Skipping."
+	fi
 	echo ""
 	echo "~/Downloads directory creation..."
 	$SUDO_CMD mkdir -p "/home/$ocr_user/Downloads" ;
@@ -95,8 +99,13 @@ then
 	# 2.3. Configuring sudo Access (sudoers)
 	# https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux_OpenStack_Platform/2/html/Getting_Started_Guide/ch02s03.html
 	echo ""
-	echo "Allow members of group '$sudoers_group' to execute any command..."
-	$SUDO_CMD usermod -a -G "$sudoers_group" "$ocr_user" || true;
+
+	if ! groups "$ocr_user" | grep -q "\b$sudoers_group\b"; then
+		echo "Allow members of group '$sudoers_group' to execute any command..."
+		$SUDO_CMD usermod -a -G "$sudoers_group" "$ocr_user" || true;
+	else
+		echo "User '$ocr_user' already belongs to the '$sudoers_group' group. Skipping."
+	if
 	echo ""
 	echo "Please enter a new password for the user [$ocr_user]:";
 	$SUDO_CMD passwd "$ocr_user" || true;

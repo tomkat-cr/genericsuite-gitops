@@ -23,7 +23,7 @@
 - [N8N](./n8n/README.md): Install and configure a local N8n service.
 - [Ollama](./ollama/README.md#ollama): Install and configure a local OLLAMA service.
 - [WebUI](./ollama/README.md#open-webui): Run the local WebUI service.
-- [Stable Diffusion](./ollama/README.md#stable-diffusion): Install and configure a local Stable Diffusion service, annd run its WebUi.
+- [Stable Diffusion](./ollama/README.md#stable-diffusion): Install and configure a local Stable Diffusion service, and run its WebUi.
 - [K8](./k8/README.md): Deploy your App on a Kubernetes cluster.
 - [VPS Deployment](./vps/README.md): Prepare a VPS server with a fully configured environment to run your App.
 - [Docker](./docker/README.md): installation toolkit for Linux servers.
