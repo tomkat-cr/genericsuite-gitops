@@ -19,7 +19,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Added
 - Add Nginx Router module [GS-180] [GS-234].
-- Add SSL certificate generation with Let's Encrypt [GS-180].
+- Add SSL certificate generation with Let's Encrypt and Mkcert [GS-180].
 - Add "README.md" and "Makefile" files to the "ollama", "n8n", "k8", "docker", "gitlab_runner", "vps", and "scripts" directories [GS-231].
 - Add "ollama_update" to ollama manager [GS-229].
 - Add memory bank documents in the "specs" directory [GS-208].

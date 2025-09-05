@@ -48,6 +48,8 @@ The ideal user experience follows a simple pattern:
 # 2. Deploy application stack
 ./vps/deploy_to_vps.sh
 
+# IMPORTANT: These scripts must be executed on the Server
+
 # 3. Create server users and groups
 ./vps/create_server_users_and_groups.sh
 
