@@ -179,9 +179,9 @@ elif [ "${SSL_CERT_GEN_METHOD}" = "office-addin-dev-certs" ]; then
     read key_pressed
 
     if [ -d $src_directory ]; then
-        rm $src_directory/localhost.key
-        rm $src_directory/localhost.crt
-        rm $src_directory/ca.crt
+        rm "${src_directory}/localhost.key"
+        rm "${src_directory}/localhost.crt"
+        rm "${src_directory}/ca.crt"
     fi
 
     if [[ -f $directory_crt/${domain}.chain.crt || -d $directory_crt/${domain}.chain.crt ]]; then

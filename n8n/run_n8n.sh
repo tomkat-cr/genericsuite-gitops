@@ -6,6 +6,9 @@
 # Reference:
 # https://docs.n8n.io/hosting/installation/docker/
 
+set -euo pipefail
+IFS=$'\n\t'
+
 REPO_BASEDIR="`pwd`"
 cd "`dirname "$0"`"
 SCRIPTS_DIR="`pwd`"
@@ -32,13 +35,8 @@ else
     exit 1
 fi
 
-if [ "$N8N_PORT" = "" ]; then
-    export N8N_PORT="5678"
-fi
-
-if [ "$ACTION" = "" ]; then
-    ACTION="$1"
-fi
+export N8N_PORT="${N8N_PORT:-5678}"
+ACTION="${ACTION:-$1}"
 if [ "$ACTION" = "" ]; then
     ACTION="run"
 fi
@@ -86,11 +84,14 @@ if [ "$ACTION" = "run" ]; then
     echo ""
     echo "Starting n8n"
     echo ""
-    if ! docker network create my_shared_network
-    then
-        echo ""
-        echo "Network my_shared_network already exists"
-        echo ""
+    if ! docker network inspect my_shared_network >/dev/null 2>&1; then
+        echo "Network my_shared_network not found, creating it..."
+        if ! docker network create my_shared_network
+        then
+            echo ""
+            echo "Network my_shared_network already exists"
+            echo ""
+        fi
     fi
     docker compose up -d
     docker ps

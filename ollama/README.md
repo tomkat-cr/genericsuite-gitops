@@ -139,7 +139,7 @@ make webui_stop
 make webui_install
 
 # Update Open WebUI images and re-run container
-make update_webui
+make webui_update
 
 # Update via Watchtower (run-once) for the `open-webui` container
 make webui_update_watchtower

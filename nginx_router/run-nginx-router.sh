@@ -29,11 +29,14 @@ elif [ "$ACTION" = "run" ]; then
         echo ""
         exit 0
     fi
-    if ! docker network create my_shared_network
-    then
-        echo ""
-        echo "Network my_shared_network already exists"
-        echo ""
+    if ! docker network inspect my_shared_network >/dev/null 2>&1; then
+        echo "Network my_shared_network not found, creating it..."
+        if ! docker network create my_shared_network
+        then
+            echo ""
+            echo "Network my_shared_network already exists"
+            echo ""
+        fi
     fi
     docker compose up -d
     echo ""

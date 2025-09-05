@@ -85,7 +85,7 @@ if [ -f version.txt ]; then
 fi
 
 # Restart the containers on the VPS
-${SSH_CMD} ${VPS_USER}@${VPS_NAME} "sh -x ${VPS_DIRECTORY}/run-server-containers.sh down" || true
-${SSH_CMD} ${VPS_USER}@${VPS_NAME} "sh -x ${VPS_DIRECTORY}/run-server-containers.sh"
+${SSH_CMD} "${VPS_USER}@${VPS_NAME}" "sh -x ${VPS_DIRECTORY}/run-server-containers.sh down" || true
+${SSH_CMD} "${VPS_USER}@${VPS_NAME}" "sh -x ${VPS_DIRECTORY}/run-server-containers.sh"
 
 # Clean up handled by trap

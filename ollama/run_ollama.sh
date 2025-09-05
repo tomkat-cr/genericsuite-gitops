@@ -3,6 +3,9 @@
 # Run Ollama service
 # 2054-08-08 | CR
 
+set -euo pipefail
+IFS=$'\n\t'
+
 run_done() {
     echo ""
     echo "Done!"
@@ -45,10 +48,29 @@ run_stop() {
     echo ""
     echo "Stopping Ollama..."
     echo ""
-    if ! ${SUDO_CMD} systemctl stop ollama.service
+    # A better way to check if a command exists is using command -v.
+    if command -v systemctl &> /dev/null
     then
         echo ""
-        echo "Failed to stop Ollama with systemctl... trying alternative method"
+        echo "Stopping Ollama with systemctl..."
+        if ! ${SUDO_CMD} systemctl stop ollama.service
+        then
+            echo ""
+            echo "Failed to stop Ollama with systemctl"
+            echo ""
+            exit 1
+        fi
+        echo ""
+        echo "Checking if Ollama is still running..."
+        if systemctl is-active --quiet ollama.service;
+        then
+            echo ""
+            echo "Failed to stop Ollama, it's still running"
+            echo ""
+            exit 1
+        fi
+    else
+        echo "Stopping Ollama with kilall"
         if ! ${SUDO_CMD} killall -s 9 ollama
         then
             echo ""
@@ -56,15 +78,14 @@ run_stop() {
             echo ""
             exit 1
         fi
-    fi
-    echo ""
-    echo "Checking if Ollama is running..."
-    if systemctl is-active --quiet ollama.service;
-    then
-        echo ""
-        echo "Failed to stop Ollama, it's still running"
-        echo ""
-        exit 1
+        echo "Checking if Ollama is still running..."
+        if ollama --version &> /dev/null
+        then
+            echo ""
+            echo "Failed to stop Ollama, it's still running"
+            echo ""
+            exit 1
+        fi
     fi
 }
 
@@ -98,17 +119,10 @@ if [ $(whoami) != "root" ] ; then
     SUDO_CMD="sudo"
 fi
 
-if [ "$RUN_WITH_GPU" = "" ]; then
-    export RUN_WITH_GPU="1";
-fi
+export RUN_WITH_GPU="${RUN_WITH_GPU:-1}";
+export OLLAMA_PORT="${OLLAMA_PORT:-11434}"
 
-if [ "$OLLAMA_PORT" = "" ]; then
-    export OLLAMA_PORT="11434"
-fi
-
-if [ "$ACTION" = "" ]; then
-    ACTION="$1"
-fi
+ACTION="${ACTION:-$1}"
 if [ "$ACTION" = "" ]; then
     ACTION="run"
 fi
