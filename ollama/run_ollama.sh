@@ -79,7 +79,7 @@ run_stop() {
             exit 1
         fi
         echo "Checking if Ollama is still running..."
-        if ollama --version &> /dev/null
+        if pgrep -x ollama > /dev/null
         then
             echo ""
             echo "Failed to stop Ollama, it's still running"

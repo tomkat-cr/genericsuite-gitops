@@ -105,7 +105,7 @@ then
 		$SUDO_CMD usermod -a -G "$sudoers_group" "$ocr_user" || true;
 	else
 		echo "User '$ocr_user' already belongs to the '$sudoers_group' group. Skipping."
-	if
+	fi
 	echo ""
 	echo "Please enter a new password for the user [$ocr_user]:";
 	$SUDO_CMD passwd "$ocr_user" || true;

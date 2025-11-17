@@ -15,7 +15,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
-## [0.4.0] - 2025-09-04
+## [0.4.0] - 2025-11-17
 
 ### Added
 - Add Nginx Router module [GS-180] [GS-234].
@@ -33,6 +33,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Fixed
 - Fix connectivity checks across services [GS-231]
+- Fix vps/create_server_users_and_groups.sh error when adding user to sudoers group [GS-230].
 
 
 ## [0.3.0] - 2025-07-07
