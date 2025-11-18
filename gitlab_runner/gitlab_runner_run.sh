@@ -25,7 +25,7 @@ if [ "${ACTION_PARAM}" = "" ]; then
     echo "Run the Gitlab runner on a docker container.";
     echo "The first parameter is the action to be made."
     echo "Available options:";
-    echo "start, stop, restart, logs, register, install-selinux-dockersock, update-config, upgrade-version, enable-privileged, check-conectivity";
+    echo "start, stop, restart, logs, register, install-selinux-dockersock, update-config, upgrade-version, enable-privileged, check-connectivity";
     echo "";
 fi
 
@@ -128,7 +128,7 @@ then
 fi
 
 # Action: Check conectivity
-if [ "${ACTION_PARAM}" = "check-conectivity" ]
+if [ "${ACTION_PARAM}" = "check-connectivity" ]
 then
     echo "" ;
     echo "Action: Check conectivity" ;

@@ -1,0 +1,18 @@
+services:
+  web:
+    image: nginx:alpine
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d:ro
+      # - ./index-custom.html:/usr/share/nginx/html/index-custom.html:ro
+      - ./www:/var/www/html:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    ports: ["80:80", "443:443"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - my_shared_network
+    restart: unless-stopped
+
+networks:
+  my_shared_network:
+    external: true # Reference the same external network as the other services

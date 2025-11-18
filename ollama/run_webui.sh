@@ -13,13 +13,6 @@ run_done() {
     exit 0
 }
 
-run_help() {
-    echo ""
-    echo "Usage: $0 run|stop|install|update|update_watchtower|open|close"
-    echo ""
-    exit 0
-}
-
 run_webui() {
     # Stop and remove any previous container
     echo ""
@@ -48,6 +41,13 @@ run_webui() {
     echo "Please check that open-webui container is running..."
     echo ""
     docker ps
+}
+
+run_help() {
+    echo ""
+    echo "Usage: $0 run|stop|install|update|update_watchtower|open|close"
+    echo ""
+    exit 0
 }
 
 REPO_BASEDIR="`pwd`"

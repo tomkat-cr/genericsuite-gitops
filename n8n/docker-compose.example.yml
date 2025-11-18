@@ -12,7 +12,7 @@ services:
   postgres:
     image: postgres:16
     platform: linux/x86_64
-    restart: always
+    restart: unless-stopped
     environment:
       - POSTGRES_USER
       - POSTGRES_PASSWORD
@@ -30,12 +30,15 @@ services:
       retries: 10
     ports:
       - 5432:5432
+    networks:
+      - my_shared_network
 
   pgadmin:
     image: dpage/pgadmin4
-    restart: always
+    restart: unless-stopped
     ports:
       - 8080:80
+      - 8443:443
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
@@ -44,10 +47,12 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - my_shared_network
 
   n8n:
     image: docker.n8n.io/n8nio/n8n
-    restart: always
+    restart: unless-stopped
     environment:
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=postgres
@@ -57,6 +62,7 @@ services:
       - DB_POSTGRESDB_PASSWORD=${POSTGRES_NON_ROOT_PASSWORD}
       - N8N_SECURE_COOKIE=${N8N_SECURE_COOKIE}
       - WEBHOOK_URL=${WEBHOOK_URL}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=${N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS:-true}
     ports:
       - 5678:5678
     links:
@@ -66,3 +72,9 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - my_shared_network
+
+networks:
+  my_shared_network:
+    external: true # Reference the same external network as the other services

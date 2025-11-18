@@ -4,28 +4,28 @@
 # Replace exampleapp_docker_account with the Docker Hub account where the images are stored
 # Replace exampleapp_secret_generic with the name of the secret where the environment variables are stored
 
-version: "3"
-
 services:
   exampleapp_frontend:
-    container_name: exampleapp_frontend
-    image: exampleapp_docker_account/exampleapp_frontend:v${APP_VERSION}-amd64
-    # platform: linux/x86_64
+    container_name: ${APP_NAME:-exampleapp}_frontend
+    image: ${IMAGE_REGISTRY:-exampleapp_docker_account}/${APP_NAME:-exampleapp}_frontend:v${APP_VERSION}-amd64
+    # To force a platform, uncomment or set APP_PLATFORM, e.g. linux/x86_64 or linux/arm64
+    # platform: ${APP_PLATFORM:-linux/x86_64}
     restart: unless-stopped
     ports:
       - 3001:3001
     expose:
       - 3001
     environment:
-      # - REACT_APP_API_URL=http://exampleapp_backend:5000
+      # - REACT_APP_API_URL=http://${APP_NAME:-exampleapp}_backend:5000
       - REACT_APP_API_URL=$APP_REACT_APP_API_URL
     networks:
       - backend
+      # - my_shared_network
 
   exampleapp_backend:
-    container_name: exampleapp_backend
-    image: exampleapp_docker_account/exampleapp_backend:v${APP_VERSION}-amd64
-    # platform: linux/x86_64
+    container_name: ${APP_NAME:-exampleapp}_backend
+    image: ${IMAGE_REGISTRY:-exampleapp_docker_account}/${APP_NAME:-exampleapp}_backend:v${APP_VERSION}-amd64
+    # platform: ${APP_PLATFORM:-linux/x86_64}
     restart: unless-stopped
     ports:
       - 5000:5000
@@ -40,6 +40,10 @@ services:
       - APP_SECRET_KEY=$APP_SECRET_KEY
     networks:
       - backend
+      # - my_shared_network
 
 networks:
   backend:
+
+# my_shared_network:
+#   external: true # Reference the same external network as the other services

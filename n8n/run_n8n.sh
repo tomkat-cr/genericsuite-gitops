@@ -6,6 +6,9 @@
 # Reference:
 # https://docs.n8n.io/hosting/installation/docker/
 
+set -euo pipefail
+IFS=$'\n\t'
+
 REPO_BASEDIR="`pwd`"
 cd "`dirname "$0"`"
 SCRIPTS_DIR="`pwd`"
@@ -16,7 +19,7 @@ if [ -f ".env" ]; then
     set -o allexport
     if ! source .env
     then
-	. .env 
+    	. .env 
     fi
     set +o allexport
 else
@@ -32,13 +35,8 @@ else
     exit 1
 fi
 
-if [ "$N8N_PORT" = "" ]; then
-    export N8N_PORT="5678"
-fi
-
-if [ "$ACTION" = "" ]; then
-    ACTION="$1"
-fi
+export N8N_PORT="${N8N_PORT:-5678}"
+ACTION="${ACTION:-$1}"
 if [ "$ACTION" = "" ]; then
     ACTION="run"
 fi
@@ -55,6 +53,7 @@ if [ "$ACTION" = "open" ]; then
     echo "Opening public access to port ${N8N_PORT} in the firewall"
     echo ""
     source ../scripts/firewall_manager.sh open ${N8N_PORT}
+    exit 0
 fi
 
 if [ "$ACTION" = "close" ]; then
@@ -62,6 +61,7 @@ if [ "$ACTION" = "close" ]; then
     echo "Closing public access to port ${N8N_PORT} in the firewall"
     echo ""
     source ../scripts/firewall_manager.sh close ${N8N_PORT}
+    exit 0
 fi
 
 if [ "$ACTION" = "stop" ]; then
@@ -69,6 +69,7 @@ if [ "$ACTION" = "stop" ]; then
     echo "Stopping n8n"
     echo ""
     docker compose stop
+    exit 0
 fi
 
 if [ "$ACTION" = "down" ]; then
@@ -76,12 +77,22 @@ if [ "$ACTION" = "down" ]; then
     echo "Stopping n8n"
     echo ""
     docker compose down
+    exit 0
 fi
 
 if [ "$ACTION" = "run" ]; then
     echo ""
     echo "Starting n8n"
     echo ""
+    if ! docker network inspect my_shared_network >/dev/null 2>&1; then
+        echo "Network my_shared_network not found, creating it..."
+        if ! docker network create my_shared_network
+        then
+            echo ""
+            echo "ERROR creating Docker Network: my_shared_network"
+            echo ""
+        fi
+    fi
     docker compose up -d
     docker ps
     echo ""
@@ -95,12 +106,14 @@ if [ "$ACTION" = "run" ]; then
     echo "Press ENTER to continue with the logs or Ctrl-C to cancel."
     read answer ;
     docker compose logs -f
+    exit 0
 fi
 
 if [ "$ACTION" = "logs" ]; then
     echo ""
     echo "Displaying logs for all services"
     docker compose logs -f
+    exit 0
 fi
 
 if [ "$ACTION" = "update" ]; then
@@ -112,6 +125,7 @@ if [ "$ACTION" = "update" ]; then
     docker compose down
     docker compose pull
     docker compose up -d
+    exit 0
 fi
 
 if [ "$ACTION" = "force-recreate" ]; then
@@ -121,4 +135,27 @@ if [ "$ACTION" = "force-recreate" ]; then
         docker compose down
     fi
     docker compose up --force-recreate -d
+    exit 0
 fi
+
+if [ "$ACTION" = "init" ]; then
+    echo ""
+    echo "Initializing n8n configuration..."
+    echo ""
+    if [ ! -f ./docker-compose.yml ]; then
+        echo ""
+        echo "Copying docker-compose.example.yml to docker-compose.yml"
+        cp ./docker-compose.example.yml ./docker-compose.yml
+    fi
+    if [ ! -f ./.env ]; then
+        echo ""
+        echo "Copying .env.example to .env"
+        cp ./.env.example ./.env
+    fi
+    exit 0
+fi
+
+echo ""    
+echo "Error: Invalid action specified: $ACTION"
+echo ""    
+exit 1

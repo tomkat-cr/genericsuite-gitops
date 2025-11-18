@@ -1,18 +1,16 @@
 # .DEFAULT_GOAL := local
-# .PHONY: tests
+.PHONY: help run stop down logs update restart open close force-recreate enter_pg enter_n8n
 SHELL := /bin/bash
 
 # General Commands
 help:
 	cat Makefile
 
-.PHONY: help
-
 # Application Specific Commands
 
 # Runs n8n in detached mode
 run:
-	bash run_n8n.sh
+	bash run_n8n.sh run
 
 # Stops n8n
 stop:
@@ -52,3 +50,8 @@ enter_pg:
 # Enter to the n8n container
 enter_n8n:
 	docker exec -ti n8n-n8n-1 sh
+
+# Initialize n8n configuration
+init:
+	bash run_n8n.sh init
+
