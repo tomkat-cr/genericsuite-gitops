@@ -82,3 +82,10 @@ nginx-router-ssl-debian:
 # Create letsencrypt SSL certificates (crt/key)
 nginx-router-ssl:
 	@echo "Please specify your OS, for example: make nginx-router-ssl-debian or make nginx-router-ssl-macos"
+
+sast-test:
+	snyk code test --severity-threshold=high --all-projects .
+	snyk test --severity-threshold=high --all-projects .
+
+agents_md_link:
+	ln -s CLAUDE.md AGENTS.md

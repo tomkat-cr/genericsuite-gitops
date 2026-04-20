@@ -168,3 +168,6 @@ cython_debug/
 # N8N
 n8n/docker-compose.yml
 n8n/.env
+
+# Claude Code
+.claude/settings.local.json
