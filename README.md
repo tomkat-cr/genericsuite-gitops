@@ -68,7 +68,7 @@ Also check the [The GenericSuite Git Operations](https://genericsuite.carlosjram
 
 ## License
 
-GenericSuite is open-sourced software licensed under the ISC license.
+GenericSuite is open-sourced software licensed under the [MIT license](./LICENSE).
 
 ## Credits
 

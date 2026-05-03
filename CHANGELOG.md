@@ -24,6 +24,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Changed
 - Rename `docs/` directory to `help/` [GS-303].
 - Rename `specs/` directory to `docs/` [GS-303].
+- License changed to MIT on README.md files [FA-244].
 
 
 ## [0.4.0] - 2025-11-17
