@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI Coding Assistants (Claude Code, Gemini CLI, Cursor, Antigravity, etc.) when working with code in this repository.
 
 ## What This Repository Does
 
@@ -15,7 +15,6 @@ make get-os-name-type      # Detect OS and distro
 make lsof-listeners        # List active port listeners
 make watch-gpu             # Monitor GPU usage
 make sast-test             # Run SAST testing
-make agents_md_link        # Link AGENTS.md and CLAUDE.md files
 
 # Service-specific help (each prints that module's Makefile targets)
 make ollama
@@ -83,5 +82,5 @@ Each service subdirectory has its own Makefile. Run `make` or `make help` inside
 
 ## Important Notes
 
-- The `AGENTS.md` file (if present) is a symlink to `CLAUDE.md` — edit only `CLAUDE.md`.
+- The files `AGENTS.md`, `GEMINI.md`, etc. (if present) have only a referece to `@CLAUDE.md` — edit only `CLAUDE.md`.
 - Skills, commands, rules, and sub-agents are located in the `.claude/` directory.
