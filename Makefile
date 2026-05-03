@@ -5,7 +5,7 @@ help:
 	cat Makefile
 
 tmux-help:
-	if less >/dev/null 2>&1; then less docs/tmux-cheatsheet.md; else bash scripts/tmux_help.sh; fi
+	if less >/dev/null 2>&1; then less help/tmux-cheatsheet.md; else bash scripts/tmux_help.sh; fi
 
 get-my-ip:
 	if command -v python3 >/dev/null 2>&1; then python3 scripts/get_my_ip.py; else echo "Error: python3 not found"; fi

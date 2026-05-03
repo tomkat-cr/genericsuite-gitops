@@ -41,7 +41,7 @@ Each service subdirectory has its own Makefile. Run `make` or `make help` inside
 | `nginx_router/` | NGINX reverse proxy with HTTP/HTTPS and SSL support |
 | `gitlab_runner/` | GitLab Runner CI/CD integration |
 | `scripts/` | Shared utilities: SSL certs, firewall, OS detection, network tools |
-| `ai_docs/` | AI context documents (projectBrief, systemPatterns, techContext, etc.) |
+| `docs/` | AI context documents (projectBrief, systemPatterns, techContext, etc.) |
 
 ### Patterns and Conventions
 

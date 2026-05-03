@@ -22,7 +22,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Add SAST testing [GS-315].
 
 ### Changed
-- Rename `specs/` directory to `ai_docs/` [GS-303].
+- Rename `docs/` directory to `help/` [GS-303].
+- Rename `specs/` directory to `docs/` [GS-303].
 
 
 ## [0.4.0] - 2025-11-17
