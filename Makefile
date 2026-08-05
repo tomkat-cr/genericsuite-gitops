@@ -84,5 +84,6 @@ nginx-router-ssl:
 	@echo "Please specify your OS, for example: make nginx-router-ssl-debian or make nginx-router-ssl-macos"
 
 sast-test:
+	snyk auth
 	snyk code test --severity-threshold=high --all-projects .
 	snyk test --severity-threshold=high --all-projects .
