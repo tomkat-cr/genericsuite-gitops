@@ -4,7 +4,7 @@
 
 [![Version](https://img.shields.io/badge/version-rolling-blue)](version.txt)
 ![Python](https://img.shields.io/badge/Python-not%20required-lightgrey)
-![Node](https://img.shields.io/badge/Node.js-not%20required-lightgrey)
+![Node.js](https://img.shields.io/badge/Node.js-not%20required-lightgrey)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
 
 ### Overview

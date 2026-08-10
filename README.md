@@ -4,7 +4,7 @@
 ![GenericSuite Gitops banner](./assets/generic.suite.gitops.banner.010.png)
 
 ![Version](https://img.shields.io/badge/version-v0.4.0-blue)
-![Python](https://img.shields.io/badge/Python-3.11-yellow)
+![Python](https://img.shields.io/badge/Python-3.12+-yellow)
 ![Node](https://img.shields.io/badge/Node.js-not%20required-lightgrey)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
