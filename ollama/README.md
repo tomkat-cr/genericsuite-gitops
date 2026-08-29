@@ -4,7 +4,7 @@
 
 ![version](https://img.shields.io/badge/version-rolling-blue)
 ![Python](https://img.shields.io/badge/Python-not%20required-lightgrey)
-![Node](https://img.shields.io/badge/Node.js-not%20required-lightgrey)
+![Node.js](https://img.shields.io/badge/Node.js-not%20required-lightgrey)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
 A collection of Bash scripts and Make targets to install, run, and manage:

@@ -2,7 +2,7 @@
 
 ![Version](https://img.shields.io/badge/version-0.4.0-blue)
 ![Python](https://img.shields.io/badge/python-N%2FA-lightgrey)
-![Node](https://img.shields.io/badge/node-N%2FA-lightgrey)
+![Node.js](https://img.shields.io/badge/node-N%2FA-lightgrey)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 ## Description / Overview

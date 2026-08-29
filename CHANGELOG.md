@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Changelog](http://keepachangelog.com/).
 
 
-## [Unreleased] - Date
+## [Unreleased] - YYYY-MM-DD
 
 ### Added
 
@@ -13,6 +13,18 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Fixed
 
 ### Removed
+
+
+## [0.5.0] - 2026-08-30
+
+### Added
+- AGENTS.md, GEMINI.md, and CLAUDE.md files to provide context and instructions to AI Coding Assistants [GS-303].
+- Add SAST testing [GS-315].
+
+### Changed
+- Rename `docs/` directory to `help/` [GS-303].
+- Rename `specs/` directory to `docs/` [GS-303].
+- License changed to MIT on README.md files [FA-244].
 
 
 ## [0.4.0] - 2025-11-17

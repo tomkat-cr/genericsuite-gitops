@@ -105,8 +105,8 @@ then
     # Enter the GitLab instance URL: https://gitlab.com/
     # Enter the registration token: <-- Check on Gitlab > Repo > Settings > CI/C > Runners
     # Enter a description for the runner: Runner on ... Server
-    # >>--> Enter tags for the runner (comma-separated): fynapp-runner
-    # Enter optional maintenance note for the runner: Fynapp runner @ ... in maintenance
+    # >>--> Enter tags for the runner (comma-separated): [app-name]-runner
+    # Enter optional maintenance note for the runner: [app-name] runner @ ... in maintenance
     # >>--> Enter an executor: docker
     # Enter the default Docker image: ruby:2.7
 fi

@@ -3,7 +3,7 @@
 # 225-08-09 | CR
 
 # Display tmux cheatsheet
-cat docs/tmux-cheatsheet.md
+cat help/tmux-cheatsheet.md
 
 # Display tmux help
 tmux help

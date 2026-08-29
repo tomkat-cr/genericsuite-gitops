@@ -4,7 +4,7 @@
 ![GenericSuite Gitops banner](./assets/generic.suite.gitops.banner.010.png)
 
 ![Version](https://img.shields.io/badge/version-v0.4.0-blue)
-![Python](https://img.shields.io/badge/Python-3.11-yellow)
+![Python](https://img.shields.io/badge/Python-3.12+-yellow)
 ![Node](https://img.shields.io/badge/Node.js-not%20required-lightgrey)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -16,7 +16,7 @@
     title="GenericSuite logo by Carlos J. Ramirez"
 />
 
-[GenericSuite](https://www.carlosjramirez.com/genericsuite/) Gitops provides the scripts and configurations needed to deploy on various platforms (local development servers, VPS) using orchestration technologies like Kubernetes, and manage artifacts and repositories with Docker and GitHub.
+[GenericSuite](https://www.carlosjramirez.com/en/genericsuite/) Gitops provides the scripts and configurations needed to deploy on various platforms (local development servers, VPS) using orchestration technologies like Kubernetes, and manage artifacts and repositories with Docker and GitHub.
 
 ## Features
 
@@ -68,7 +68,7 @@ Also check the [The GenericSuite Git Operations](https://genericsuite.carlosjram
 
 ## License
 
-GenericSuite is open-sourced software licensed under the ISC license.
+GenericSuite is open-sourced software licensed under the [MIT license](./LICENSE).
 
 ## Credits
 

@@ -4,8 +4,8 @@
 
 [![Version](https://img.shields.io/badge/version-rolling-blue)](version.txt)
 ![Python](https://img.shields.io/badge/Python-not%20required-lightgrey)
-![Node](https://img.shields.io/badge/Node.js-not%20required-lightgrey)
-[![License: ISC](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
+![Node.js](https://img.shields.io/badge/Node.js-not%20required-lightgrey)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](../LICENSE)
 
 ### Overview
 
@@ -199,7 +199,7 @@ vps/
 
 ### License
 
-This project is licensed under the ISC License. See the [LICENSE](../LICENSE) file for details.
+This project is licensed under the MIT license. See the [LICENSE](../LICENSE) file for details.
 
 ### Contributing
 

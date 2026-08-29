@@ -53,7 +53,7 @@
 ### Workflow and Automation
 
 #### N8n Workflow Engine
-- **Technology**: Node-based workflow automation
+- **Technology**: Node.js-based workflow automation
 - **Database**: PostgreSQL backend for workflow persistence
 - **Administration**: pgAdmin for database management
 - **Integration**: REST API and webhook support for external integrations
